@@ -1,0 +1,71 @@
+{
+id: "terre",
+name: "La Terre",
+englishName: "Earth",
+isPlanet: true,
+moons: [
+{
+moon: "La Lune",
+rel: "https://api.le-systeme-solaire.net/rest/bodies/lune"
+}
+],
+semimajorAxis: 149598023,
+perihelion: 147095000,
+aphelion: 152100000,
+eccentricity: 0.0167,
+inclination: 0,
+mass: {
+massValue: 5.97237,
+massExponent: 24
+},
+vol: {
+volValue: 1.08321,
+volExponent: 12
+},
+density: 5.5136,
+gravity: 9.8,
+escape: 11190,
+meanRadius: 6371.0084,
+equaRadius: 6378.1366,
+polarRadius: 6356.8,
+flattening: 0.00335,
+dimension: "",
+sideralOrbit: 365.256,
+sideralRotation: 23.9345,
+aroundPlanet: null,
+discoveredBy: "",
+discoveryDate: "",
+alternativeName: "",
+axialTilt: 23.4393,
+avgTemp: 288,
+mainAnomaly: 358.617,
+argPeriapsis: 85.901,
+longAscNode: 18.272,
+bodyType: "Planet"
+}
+
+
+Mercury 87.97 days // 2 segundos // animation 0.4
+Venus		224.7 days // 5 segundos // animation 1
+Earth		365.26 days //  8 segundos // animation 1.6
+Mars		1.88 years // 693 days // 15 segundos // animation 3
+Jupiter		11 years // 4015 days // 91 segundos // animation 18
+Saturn		29 years // 10755 days // 244 segundos // animation 44
+Uranus		84 years // 30685 days  // 700 segundos // animation 140
+Neptune		164 years // 59860 days  // 1300 segundos // animation 260
+
+
+Pluto		248 years // 103600 days
+
+
+distancia
+
+  /* Sun	0
+Mercury		57,910,000
+Venus	108,200,000
+Earth	149,600,000
+Mars		227,940,000
+Jupiter		778,330,000
+Saturn		1,429,400,000
+Uranus	2,870,990,000
+Neptune		4,504,000,000 */

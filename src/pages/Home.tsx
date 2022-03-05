@@ -1,17 +1,41 @@
 import React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 // import gsap from 'gsap';
 
 import { UseGlobalContext } from '../context';
+
+interface singleBody {
+  id: string;
+  name: string;
+  meanRadius: number;
+  isPlanet: boolean;
+  englishName: string;
+}
+
 const Home: React.FC = () => {
-  const { solarSistem }: any = UseGlobalContext();
+  const { solarSistem, scale, speed, controlSpeed, controlSize } =
+    UseGlobalContext();
+
+  const speedBtn = useRef<HTMLButtonElement>(null!);
+  const scaleBtn = useRef<HTMLButtonElement>(null!);
+  const container = useRef<HTMLDivElement>(null!);
+  const singleBody = useRef<HTMLAnchorElement>(null!);
 
   useEffect(() => {
-    const allStars = document.querySelectorAll('.single-body')! as any;
-    window.addEventListener('click', () => {
-      allStars.forEach((star: any) => {
+    speedBtn.current.addEventListener('click', () => {
+      controlSpeed();
+    });
+    scaleBtn.current.addEventListener('click', () => {
+      controlSize();
+    });
+  }, [speed, scale]);
+
+  useEffect(() => {
+    const allStars = document.querySelectorAll<HTMLElement>('.single-body');
+    container.current.addEventListener('click', () => {
+      allStars.forEach((star: HTMLElement) => {
         if (star.style.animationPlayState === 'paused') {
           star.style.animationPlayState = 'running';
         } else {
@@ -19,7 +43,7 @@ const Home: React.FC = () => {
         }
       });
     });
-  });
+  }, [solarSistem]);
 
   // useEffect(() => {
   //   // test gsap
@@ -93,18 +117,32 @@ const Home: React.FC = () => {
   return (
     <Wrapper>
       {/* <div className='ball'></div> */}
-      <div className='container'>
-        {/* <div className='Sun'></div> */}
-        {solarSistem.map((planet: any) => {
+      <button ref={speedBtn} className='btn'>
+        Speed
+      </button>
+      <button ref={scaleBtn} className='btn'>
+        Scale
+      </button>
+      <div ref={container} className='container'>
+        {solarSistem.map((planet: singleBody) => {
           return (
             <Link
+              ref={singleBody}
               key={planet.id}
               to={`/planet/${planet.id}`}
-              style={{
-                height: `${planet.meanRadius / 6000}px`,
-                width: `${planet.meanRadius / 6000}px`,
-              }}
-              className={`single-body animation ${planet.englishName.toLowerCase()}`}
+              style={
+                scale
+                  ? {
+                      height: `${planet.meanRadius / 6000}px`,
+                      width: `${planet.meanRadius / 6000}px`,
+                    }
+                  : {}
+              }
+              className={
+                speed
+                  ? `single-body animation  ${planet.englishName.toLowerCase()} `
+                  : `single-body animation ${planet.englishName.toLowerCase()} speed`
+              }
             ></Link>
           );
         })}
@@ -133,8 +171,8 @@ const Wrapper = styled.div`
   }
   .sun {
     position: absolute;
-    width: 10em;
-    height: 10em;
+    width: 3rem;
+    height: 3rem;
     background-color: yellow;
     border-radius: 50%;
     box-shadow: 0 0 3em white;
@@ -155,10 +193,22 @@ const Wrapper = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    /* border-style: solid;
-    border-color: white transparent transparent transparent;
-    border-width: 0.1em 0.1em 0 0;
-    border-radius: 50%; */
+    width: 0.5rem;
+    height: 0.5rem;
+  }
+
+  @media screen and (min-width: 678px) {
+    .mercury,
+    .venus,
+    .mars,
+    .earth,
+    .jupiter,
+    .saturn,
+    .uranus,
+    .neptune {
+      width: 1rem;
+      height: 1rem;
+    }
   }
 
   .animation {
@@ -183,21 +233,20 @@ const Wrapper = styled.div`
 
   /* mercury */
   .mercury {
-    animation-duration: 10.5s;
+    animation-duration: 4s;
   }
 
   .mercury::before {
     content: '';
-    top: 100px;
-    right: 100px;
+    top: 40px;
+    right: 40px;
     background-color: violet;
   }
 
   /* venus */
   .venus {
-    animation-duration: 10.5s;
+    animation-duration: 6s;
   }
-
   .venus::before {
     content: '';
     top: 60px;
@@ -206,61 +255,55 @@ const Wrapper = styled.div`
   }
   /* earth */
   .earth {
-    animation-duration: 36.5s;
+    animation-duration: 8s;
+    /* animation-duration: 36.5s; */
   }
-
-  /* Sun	0
-Mercury		57,910,000
-Venus	108,200,000
-Earth	149,600,000
-Mars		227,940,000
-Jupiter		778,330,000
-Saturn		1,429,400,000
-Uranus	2,870,990,000
-Neptune		4,504,000,000 */
 
   .earth::before {
     content: '';
-    top: 100px;
-    right: 100px;
+    top: 80px;
+    right: 80px;
     background-color: aqua;
   }
   /* mars */
   .mars {
-    animation-duration: 25.5s;
+    animation-duration: 9s;
   }
 
   .mars::before {
     content: '';
-    top: 120px;
-    right: 120px;
+    top: 100px;
+    right: 100px;
     background-color: red;
   }
   /* jupiter */
   .jupiter {
-    animation-duration: 30.5s;
+    animation-duration: 11s;
+    /* animation-duration: 30.5s; */
   }
 
   .jupiter::before {
     content: '';
-    top: 130px;
-    right: 130px;
+    top: 120px;
+    right: 120px;
     background-color: pink;
   }
   /* saturn */
   .saturn {
-    animation-duration: 32.5s;
+    animation-duration: 14s;
+    /* animation-duration: 32.5s; */
   }
 
   .saturn::before {
     content: '';
-    top: 140px;
-    right: 140px;
+    top: 130px;
+    right: 130px;
     background-color: orange;
   }
   /* uranus */
   .uranus {
-    animation-duration: 37.5s;
+    animation-duration: 16s;
+    /* animation-duration: 37.5s; */
   }
 
   .uranus::before {
@@ -271,20 +314,64 @@ Neptune		4,504,000,000 */
   }
   /* neptune */
   .neptune {
-    animation-duration: 40.5s;
+    /* animation-duration: 40.5s; */
+    animation-duration: 18s;
   }
 
   .neptune::before {
     content: '';
-    top: 160px;
-    right: 160px;
+    top: 140px;
+    right: 140px;
     background-color: green;
+  }
+
+  @media screen and (min-width: 678px) {
+    .saturn::before {
+      top: 140px;
+      right: 140px;
+    }
+
+    .neptune::before {
+      top: 170px;
+      right: 170px;
+    }
+
+    .uranus::before {
+      top: 160px;
+      right: 160px;
+    }
   }
 
   @keyframes orbit {
     to {
       transform: translate(-50%, -50%) rotate(360deg);
     }
+  }
+
+  // speed
+  .mercury.speed {
+    animation-duration: 0.4s;
+  }
+  .venus.speed {
+    animation-duration: 1s;
+  }
+  .earth.speed {
+    animation-duration: 1.6s;
+  }
+  .mars.speed {
+    animation-duration: 3s;
+  }
+  .jupiter.speed {
+    animation-duration: 18s;
+  }
+  .saturn.speed {
+    animation-duration: 44s;
+  }
+  .uranus.speed {
+    animation-duration: 140s;
+  }
+  .neptune.speed {
+    animation-duration: 260s;
   }
 
   /* test */

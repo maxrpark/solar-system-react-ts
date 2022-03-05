@@ -3,14 +3,27 @@ import { useState, useEffect, useContext } from 'react';
 
 import axios from 'axios';
 
-interface defaultValue {
-  solarSistem: any;
+interface singleBody {
+  id: string;
+  name: string;
+  meanRadius: number;
+  isPlanet: boolean;
+  englishName: string;
 }
 
-const AppContext = React.createContext<unknown>(undefined);
+interface ContextState {
+  solarSistem: Array<singleBody>;
+  controlSpeed: () => void;
+  controlSize: () => void;
+  scale: boolean;
+  speed: boolean;
+}
+const AppContext = React.createContext({} as ContextState);
 
-const AppProvider: React.FC<{}> = ({ children }) => {
-  const [solarSistem, setSolarSistem] = useState<number[]>([]);
+const AppProvider: React.FC = ({ children }) => {
+  const [solarSistem, setSolarSistem] = useState<singleBody[]>([]);
+  const [scale, setScale] = useState(false);
+  const [speed, setSpeed] = useState(true);
   // const [loading, setLoading] = useState(true);
   // const [error, setError] = useState(null);
   // const [isLoading, setIsLoading] = useState(false);
@@ -22,11 +35,15 @@ const AppProvider: React.FC<{}> = ({ children }) => {
         'https://api.le-systeme-solaire.net/rest/bodies/'
       );
       const data = response.data.bodies;
+
       if (data.length) {
         const allBodies = Array();
-        const isPlanet = data.filter((item: any) => item.isPlanet === true);
-        const isSun = data.filter((item: any) => item.englishName === 'Sun');
-        console.log(isSun);
+        const isPlanet = data.filter(
+          (item: singleBody) => item.isPlanet === true
+        );
+        const isSun = data.filter(
+          (item: singleBody) => item.englishName === 'Sun'
+        );
         allBodies.push(...isSun, ...isPlanet);
         setSolarSistem(allBodies);
       }
@@ -35,12 +52,23 @@ const AppProvider: React.FC<{}> = ({ children }) => {
     }
   };
 
+  const controlSpeed = () => {
+    setSpeed(!speed);
+  };
+
+  // tyscript void function
+  const controlSize = () => {
+    setScale(!scale);
+  };
+
   useEffect(() => {
     getData();
   }, []);
 
   return (
-    <AppContext.Provider value={{ solarSistem }}>
+    <AppContext.Provider
+      value={{ solarSistem, scale, speed, controlSpeed, controlSize }}
+    >
       {children}
     </AppContext.Provider>
   );
