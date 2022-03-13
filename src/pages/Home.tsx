@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-// import gsap from 'gsap';
+import gsap from 'gsap';
 
 import { UseGlobalContext } from '../context';
 
@@ -45,78 +45,90 @@ const Home: React.FC = () => {
     });
   }, [solarSistem]);
 
-  // useEffect(() => {
-  //   // test gsap
-  //   const mouseFollow = () => {
-  //     gsap.set('.ball', { xPercent: -50, yPercent: -50 });
-  //     const ball = document.querySelector('.ball');
-  //     const pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-  //     const mouse = { x: pos.x, y: pos.y };
-  //     const speed = 0.35;
-  //     const xSet = gsap.quickSetter(ball, 'x', 'px');
-  //     const ySet = gsap.quickSetter(ball, 'y', 'px');
-  //     window.addEventListener('mousemove', (e) => {
-  //       // console.log(e);
-  //       const allStars = document.querySelectorAll('.single-body');
-  //       const ball = document.querySelector('.ball');
-  //       // if (!this.isModalOpen) {
-  //       if (ball.classList.contains('ball-zoom')) {
-  //         ball.classList.remove('ball-zoom');
-  //       }
-  //       // ball.classList.add('ball-zoom');
+  useEffect(() => {
+    // test gsap
+    const mouseFollow = () => {
+      gsap.set('.ball', { xPercent: -50, yPercent: -50 });
+      const ball = document.querySelector('.ball')! as HTMLElement;
+      const pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+      const mouse = { x: pos.x, y: pos.y };
+      const speed = 0.35;
+      const xSet = gsap.quickSetter(ball, 'x', 'px');
+      const ySet = gsap.quickSetter(ball, 'y', 'px');
+      window.addEventListener('mousemove', (e) => {
+        const allStars = document.querySelectorAll<HTMLElement>('.single-body');
 
-  //       // allStars.forEach((star) => {
-  //       //   if (star.classList.contains('zoom')) {
-  //       //     star.classList.remove('zoom');
-  //       //   } else {
-  //       //     return;
-  //       //   }
-  //       // });
-  //       // }
-  //       // media query to check
-  //       // const media_query =
-  //       //   'screen and (min-width:320px) and (max-width:960px)';
-  //       // const matched = window.matchMedia(media_query).matches;
-  //       if (e.target.classList.contains('single-body')) {
-  //         // if (matched) {
-  //         // e.target.classList.add('zoom');
-  //         ball.classList.add('ball-zoom');
-  //         allStars.forEach((star) => {
-  //           star.style.animationPlayState = 'paused';
-  //         });
-  //         const height = e.target.offsetHeight;
-  //         console.log(e.target.offsetHeight);
-  //         const width = e.target.style.width;
-  //         e.target.style.height = height * 0.6 + 'px';
-  //         console.log(e.target.offsetHeight);
-  //         // e.target.style.width = '40px';
-  //         // }
-  //       } else {
-  //         allStars.forEach((star) => {
-  //           star.style.animationPlayState = 'running';
-  //         });
-  //       }
-  //       mouse.x = e.x;
-  //       mouse.y = e.y;
-  //       // console.log('hello');
-  //     });
-  //     gsap.ticker.add(() => {
-  //       // adjust speed for higher refresh monitors
-  //       const dt = 1.0 - Math.pow(1.0 - speed, gsap.ticker.deltaRatio());
-  //       pos.x += (mouse.x - pos.x) * dt;
-  //       pos.y += (mouse.y - pos.y) * dt;
-  //       // if (!this.moveCursor) {
-  //       xSet(pos.x);
-  //       ySet(pos.y);
-  //       // }
-  //     });
-  //   };
-  //   mouseFollow();
-  // }, []);
+        const ball = document.querySelector('.ball')! as HTMLDivElement;
+        const innerBall = document.querySelector(
+          '.ball-inner'
+        )! as HTMLDivElement;
+        if (ball) {
+          if (ball.classList.contains('ball-zoom')) {
+            ball.classList.remove('ball-zoom');
+          } else {
+            innerBall.style.display = 'none';
+          }
+        }
+
+        // allStars.forEach((star) => {
+        //   if (star.classList.contains('zoom')) {
+        //     star.classList.remove('zoom');
+        //   } else {
+        //     return;
+        //   }
+        // });
+        // }
+        // media query to check
+        // const media_query =
+        //   'screen and (min-width:320px) and (max-width:960px)';
+        // const matched = window.matchMedia(media_query).matches;
+        // (e.target as HTMLElement).classList.add('zoom');
+        if ((e.target as HTMLElement).classList.contains('single-body')) {
+          let innerBallColor = (e.target as HTMLElement).id;
+
+          ball.classList.add('ball-zoom');
+          if (innerBallColor !== 'sun') {
+            innerBall.style.display = 'block';
+            innerBall.style.backgroundColor = `var(--${innerBallColor})`;
+          }
+          allStars.forEach((star: HTMLElement) => {
+            star.addEventListener('mouseover', () => {
+              allStars.forEach((star: HTMLElement) => {
+                star.style.animationPlayState = 'paused';
+              });
+            });
+          });
+
+          allStars.forEach((star: HTMLElement) => {
+            star.addEventListener('mouseleave', () => {
+              allStars.forEach((star: HTMLElement) => {
+                star.style.animationPlayState = 'running';
+              });
+            });
+          });
+        }
+        mouse.x = e.x;
+        mouse.y = e.y;
+      });
+      gsap.ticker.add(() => {
+        // adjust speed for higher refresh monitors
+        const dt = 1.0 - Math.pow(1.0 - speed, gsap.ticker.deltaRatio());
+        pos.x += (mouse.x - pos.x) * dt;
+        pos.y += (mouse.y - pos.y) * dt;
+        // if (!this.moveCursor) {
+        xSet(pos.x);
+        ySet(pos.y);
+        // }
+      });
+    };
+    mouseFollow();
+  }, []);
 
   return (
     <Wrapper>
-      {/* <div className='ball'></div> */}
+      <div className='ball'>
+        <div className='ball-inner'></div>
+      </div>
       <button ref={speedBtn} className='btn'>
         Speed
       </button>
@@ -130,6 +142,7 @@ const Home: React.FC = () => {
               ref={singleBody}
               key={planet.id}
               to={`/planet/${planet.id}`}
+              id={`${planet.englishName.toLowerCase()}`}
               style={
                 scale
                   ? {
@@ -173,12 +186,13 @@ const Wrapper = styled.div`
     position: absolute;
     width: 3rem;
     height: 3rem;
-    background-color: yellow;
+    background-color: var(--sun);
     border-radius: 50%;
     box-shadow: 0 0 3em white;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    z-index: 1;
   }
 
   .mercury,
@@ -240,7 +254,7 @@ const Wrapper = styled.div`
     content: '';
     top: 40px;
     right: 40px;
-    background-color: violet;
+    background-color: var(--mercury);
   }
 
   /* venus */
@@ -251,7 +265,7 @@ const Wrapper = styled.div`
     content: '';
     top: 60px;
     right: 60px;
-    background-color: violet;
+    background-color: var(--venus);
   }
   /* earth */
   .earth {
@@ -263,7 +277,7 @@ const Wrapper = styled.div`
     content: '';
     top: 80px;
     right: 80px;
-    background-color: aqua;
+    background-color: var(--earth);
   }
   /* mars */
   .mars {
@@ -274,7 +288,7 @@ const Wrapper = styled.div`
     content: '';
     top: 100px;
     right: 100px;
-    background-color: red;
+    background-color: var(--mars);
   }
   /* jupiter */
   .jupiter {
@@ -286,7 +300,7 @@ const Wrapper = styled.div`
     content: '';
     top: 120px;
     right: 120px;
-    background-color: pink;
+    background-color: var(--jupiter);
   }
   /* saturn */
   .saturn {
@@ -298,7 +312,7 @@ const Wrapper = styled.div`
     content: '';
     top: 130px;
     right: 130px;
-    background-color: orange;
+    background-color: var(--saturn);
   }
   /* uranus */
   .uranus {
@@ -310,7 +324,7 @@ const Wrapper = styled.div`
     content: '';
     top: 150px;
     right: 150px;
-    background-color: blue;
+    background-color: var(--uranus);
   }
   /* neptune */
   .neptune {
@@ -322,7 +336,7 @@ const Wrapper = styled.div`
     content: '';
     top: 140px;
     right: 140px;
-    background-color: green;
+    background-color: var(--neptune);
   }
 
   @media screen and (min-width: 678px) {
@@ -387,11 +401,20 @@ const Wrapper = styled.div`
     pointer-events: none;
     z-index: 1;
     transition: height 0.2s ease, width 0.2s ease;
-    /* transition: width 10s ease; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .ball-inner {
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    border-radius: 50%;
+    z-index: 2;
   }
   @media screen and (max-width: 960px) {
     .ball {
-      /* display: none; */
+      display: none;
     }
   }
   .zoom {

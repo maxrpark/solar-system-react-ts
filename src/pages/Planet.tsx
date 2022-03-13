@@ -65,7 +65,7 @@ const Planet: React.FC = () => {
       <h1>{singlePlanet.meanRadius.toString().slice(0, 2)}</h1>
       {singlePlanet.moons &&
         singlePlanet.moons.map((moon) => {
-          return <h1>{moon.moon}</h1>;
+          return <h1 key={moon.moon}>{moon.moon}</h1>;
         })}
     </Wrapper>
   );
