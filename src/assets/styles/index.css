@@ -5,6 +5,14 @@
 }
 
 :root {
+  --border-radius-1: 2px;
+  --border-radius-2: 5px;
+  --border-radius-3: 10px;
+  --transition-1: all 0.3s ease;
+  /* colors */
+  --color-white: #ffffff;
+  --color-black: #000000;
+  /* bodies */
   --sun: #f2d024;
   --mercury: violet;
   --venus: red;

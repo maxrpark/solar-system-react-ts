@@ -17,12 +17,110 @@ interface singleBody {
 const Home: React.FC = () => {
   const { solarSistem, scale, speed, controlSpeed, controlSize } =
     UseGlobalContext();
+  const [size, setSize] = useState(window.innerWidth) as any;
 
   const speedBtn = useRef<HTMLButtonElement>(null!);
   const scaleBtn = useRef<HTMLButtonElement>(null!);
   const container = useRef<HTMLDivElement>(null!);
   const singleBody = useRef<HTMLAnchorElement>(null!);
 
+  const messege = useRef<HTMLParagraphElement>(null!);
+  const planetName = useRef<HTMLParagraphElement>(null!);
+  const innerBall = useRef<HTMLDivElement>(null!);
+
+  const messegeFunction = () => {
+    setSize(window.innerWidth);
+    if (size < 950) {
+      messege.current.textContent =
+        'Click to pause or click on a planet to see more info';
+    } else {
+      messege.current.textContent =
+        // 'Click to pause, hover over a planet to pause and click to see more info';
+        'Click to pause or click on a planet to see more info';
+    }
+  };
+
+  interface Mouse {
+    x: number;
+    y: number;
+  }
+  // GSAP ANIMATION NO WORKING (ball div commented)
+  // const moveCoursorFunc = (e: MouseEvent, mouse: Mouse): void => {
+  //   const allStars = document.querySelectorAll<HTMLElement>('.single-body');
+  //   const ball = document.querySelector('.ball')! as HTMLDivElement;
+  //   if (ball) {
+  //     if (ball.classList.contains('ball-zoom')) {
+  //       ball.classList.remove('ball-zoom');
+  //     } else {
+  //       innerBall.current.style.display = 'none';
+  //     }
+  //   }
+  //   if ((e.target as HTMLElement).classList.contains('single-body')) {
+  //     let innerBallColor = (e.target as HTMLElement).id;
+
+  //     ball.classList.add('ball-zoom');
+  //     if (innerBallColor !== 'sun') {
+  //       innerBall.current.style.display = 'block';
+  //       innerBall.current.style.backgroundColor = `var(--${innerBallColor})`;
+  //       planetName.current.textContent = innerBallColor;
+  //     }
+  //     allStars.forEach((star: HTMLElement) => {
+  //       star.addEventListener('mouseover', () => {
+  //         allStars.forEach((star: HTMLElement) => {
+  //           star.style.animationPlayState = 'paused';
+  //         });
+  //       });
+  //     });
+
+  //     allStars.forEach((star: HTMLElement) => {
+  //       star.addEventListener('mouseleave', () => {
+  //         allStars.forEach((star: HTMLElement) => {
+  //           star.style.animationPlayState = 'running';
+  //         });
+  //       });
+  //     });
+  //   }
+  //   mouse.x = e.x;
+  //   mouse.y = e.y;
+  // };
+
+  // useEffect(() => {
+  //   window.addEventListener('mousemove', (e) => moveCoursorFunc(e, mouse));
+  //   // test gsap
+  //   gsap.set('.ball', { xPercent: -50, yPercent: -50 });
+  //   const ball = document.querySelector('.ball')! as HTMLElement;
+  //   const pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+  //   const mouse: Mouse = { x: pos.x, y: pos.y };
+  //   const speed = 0.35;
+  //   const xSet = gsap.quickSetter(ball, 'x', 'px');
+  //   const ySet = gsap.quickSetter(ball, 'y', 'px');
+  //   window.addEventListener('mousemove', (e) => moveCoursorFunc(e, mouse));
+  //   gsap.ticker.add(() => {
+  //     // adjust speed for higher refresh monitors
+  //     const dt = 1.0 - Math.pow(1.0 - speed, gsap.ticker.deltaRatio());
+  //     pos.x += (mouse.x - pos.x) * dt;
+  //     pos.y += (mouse.y - pos.y) * dt;
+  //     // if (!this.moveCursor) {
+  //     xSet(pos.x);
+  //     ySet(pos.y);
+  //     // }
+  //   });
+  //   // fix mouse event
+  //   return () => {
+  //     console.log('by');
+  //     window.removeEventListener('mousemove', (e) => moveCoursorFunc(e, mouse));
+  //     console.log('killed');
+  //   };
+  // });
+
+  // messege TODO (gsap cursor not working)
+  useEffect(() => {
+    messegeFunction();
+    window.addEventListener('resize', messegeFunction);
+    return () => window.removeEventListener('resize', messegeFunction);
+  });
+
+  // control speed and size
   useEffect(() => {
     speedBtn.current.addEventListener('click', () => {
       controlSpeed();
@@ -32,6 +130,7 @@ const Home: React.FC = () => {
     });
   }, [speed, scale]);
 
+  // pause animation
   useEffect(() => {
     const allStars = document.querySelectorAll<HTMLElement>('.single-body');
     container.current.addEventListener('click', () => {
@@ -45,97 +144,23 @@ const Home: React.FC = () => {
     });
   }, [solarSistem]);
 
-  useEffect(() => {
-    // test gsap
-    const mouseFollow = () => {
-      gsap.set('.ball', { xPercent: -50, yPercent: -50 });
-      const ball = document.querySelector('.ball')! as HTMLElement;
-      const pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-      const mouse = { x: pos.x, y: pos.y };
-      const speed = 0.35;
-      const xSet = gsap.quickSetter(ball, 'x', 'px');
-      const ySet = gsap.quickSetter(ball, 'y', 'px');
-      window.addEventListener('mousemove', (e) => {
-        const allStars = document.querySelectorAll<HTMLElement>('.single-body');
-
-        const ball = document.querySelector('.ball')! as HTMLDivElement;
-        const innerBall = document.querySelector(
-          '.ball-inner'
-        )! as HTMLDivElement;
-        if (ball) {
-          if (ball.classList.contains('ball-zoom')) {
-            ball.classList.remove('ball-zoom');
-          } else {
-            innerBall.style.display = 'none';
-          }
-        }
-
-        // allStars.forEach((star) => {
-        //   if (star.classList.contains('zoom')) {
-        //     star.classList.remove('zoom');
-        //   } else {
-        //     return;
-        //   }
-        // });
-        // }
-        // media query to check
-        // const media_query =
-        //   'screen and (min-width:320px) and (max-width:960px)';
-        // const matched = window.matchMedia(media_query).matches;
-        // (e.target as HTMLElement).classList.add('zoom');
-        if ((e.target as HTMLElement).classList.contains('single-body')) {
-          let innerBallColor = (e.target as HTMLElement).id;
-
-          ball.classList.add('ball-zoom');
-          if (innerBallColor !== 'sun') {
-            innerBall.style.display = 'block';
-            innerBall.style.backgroundColor = `var(--${innerBallColor})`;
-          }
-          allStars.forEach((star: HTMLElement) => {
-            star.addEventListener('mouseover', () => {
-              allStars.forEach((star: HTMLElement) => {
-                star.style.animationPlayState = 'paused';
-              });
-            });
-          });
-
-          allStars.forEach((star: HTMLElement) => {
-            star.addEventListener('mouseleave', () => {
-              allStars.forEach((star: HTMLElement) => {
-                star.style.animationPlayState = 'running';
-              });
-            });
-          });
-        }
-        mouse.x = e.x;
-        mouse.y = e.y;
-      });
-      gsap.ticker.add(() => {
-        // adjust speed for higher refresh monitors
-        const dt = 1.0 - Math.pow(1.0 - speed, gsap.ticker.deltaRatio());
-        pos.x += (mouse.x - pos.x) * dt;
-        pos.y += (mouse.y - pos.y) * dt;
-        // if (!this.moveCursor) {
-        xSet(pos.x);
-        ySet(pos.y);
-        // }
-      });
-    };
-    mouseFollow();
-  }, []);
-
   return (
     <Wrapper>
-      <div className='ball'>
-        <div className='ball-inner'></div>
+      {/* <div className='ball'>
+        <div className='ball-inner' ref={innerBall}>
+          <p ref={planetName}></p>
+        </div>
+      </div> */}
+      <div className='options'>
+        <button ref={speedBtn} className='btn'>
+          Speed
+        </button>
+        <button ref={scaleBtn} className='btn'>
+          Scale
+        </button>
       </div>
-      <button ref={speedBtn} className='btn'>
-        Speed
-      </button>
-      <button ref={scaleBtn} className='btn'>
-        Scale
-      </button>
       <div ref={container} className='container'>
+        <p className='messege' ref={messege}></p>
         {solarSistem.map((planet: singleBody) => {
           return (
             <Link
@@ -166,22 +191,47 @@ const Home: React.FC = () => {
 
 export default Home;
 
-const Wrapper = styled.div`
+const Wrapper = styled.section`
   margin: 0;
   height: 100vh;
   display: flex;
   align-items: center;
+  flex-direction: column;
   justify-content: center;
   background-color: black;
-  overflow: hidden;
 
   .container {
     font-size: 10px;
-    width: 50em;
+    width: 100%;
     height: 50em;
     position: relative;
-    border: 2px solid red;
+    border: 1px solid var(--color-white);
+    /* overflow: hidden; */
   }
+  .messege {
+    text-align: center;
+    margin: 1rem;
+    color: var(--color-white);
+    font-size: 1rem;
+  }
+  .options {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .btn {
+    background-color: var(--color-white);
+    padding: 0.4rem 0.7rem;
+    border: 2px solid var(--color-white);
+    border-radius: var(--border-radius-1);
+    transition: var(--transition-1);
+  }
+  .btn:hover {
+    background-color: var(--color-black);
+    border: 2px solid var(--color-white);
+    color: var(--color-white);
+  }
+
+  /* bodies */
   .sun {
     position: absolute;
     width: 3rem;
@@ -411,6 +461,16 @@ const Wrapper = styled.div`
     background-color: white;
     border-radius: 50%;
     z-index: 2;
+  }
+  .ball-inner p {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.7rem;
+    color: var(--color-white);
+    text-transform: capitalize;
   }
   @media screen and (max-width: 960px) {
     .ball {

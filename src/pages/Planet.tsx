@@ -51,12 +51,12 @@ const Planet: React.FC = () => {
   };
   useEffect(() => {
     getSinglePlanet();
-  }, []);
+  }, [id]);
   if (loading) {
     return <h1>Loading...</h1>;
   }
   return (
-    <Wrapper>
+    <Wrapper key={singlePlanet.name}>
       <div className='single-body'>
         <div className={`${singlePlanet.englishName.toLowerCase()}`}></div>
       </div>
