@@ -10,7 +10,10 @@ const Sidebar: React.FC = (props: Props) => {
   return (
     <Wrapper>
       <div className={`sidebar ${isSideBarOpen ? 'hideSidebar ' : ''}`}>
-        <AiFillCloseCircle onClick={() => closeSidebar()} />
+        <AiFillCloseCircle
+          className='close-icon'
+          onClick={() => closeSidebar()}
+        />
         <ul>
           {planetsNames.map((item: string) => {
             return (
@@ -33,9 +36,9 @@ export default Sidebar;
 
 const Wrapper = styled.section`
   .sidebar {
-    background-color: red;
+    background-color: var(--color-black);
     width: 100%;
-    min-height: 100vh;
+    height: 100vh;
     position: absolute;
     top: 0;
     left: -100%;
@@ -44,5 +47,27 @@ const Wrapper = styled.section`
   }
   .hideSidebar {
     left: 0;
+  }
+  ul {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+  }
+  a {
+    text-decoration: none;
+    text-transform: capitalize;
+    color: var(--color-white);
+    font-size: large;
+    letter-spacing: 0.25rem;
+  }
+  .close-icon {
+    right: 2rem;
+    top: 2rem;
+    position: absolute;
+    color: white;
+    font-size: 1.5rem;
   }
 `;

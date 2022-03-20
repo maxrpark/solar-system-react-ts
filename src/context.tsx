@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect, useContext } from 'react';
+import { useState, useEffect, useContext, useRef } from 'react';
 
 import axios from 'axios';
 
@@ -17,10 +17,15 @@ interface ContextState {
   controlSize: () => void;
   openSidebar: () => void;
   closeSidebar: () => void;
+  addToRef: (ref: HTMLElement) => void;
+  showSection: (e: any) => void;
   scale: boolean;
   speed: boolean;
   isSideBarOpen: boolean;
   planetsNames: Array<string>;
+  ID1: number;
+  ID2: number;
+  ID3: number;
 }
 const AppContext = React.createContext({} as ContextState);
 
@@ -30,10 +35,10 @@ const AppProvider: React.FC = ({ children }) => {
   const [scale, setScale] = useState(false);
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [speed, setSpeed] = useState(true);
-  // const [planetsName, setPlanetsName] = useState<string[]>([]);
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(null);
-  // const [isLoading, setIsLoading] = useState(false);
+  const [BTNID, setBTNID] = useState(1);
+  const [ID1, setID1] = useState(1);
+  const [ID2, setID2] = useState(2);
+  const [ID3, setID3] = useState(3);
 
   // asyn axios  function
   const getData = async () => {
@@ -80,6 +85,25 @@ const AppProvider: React.FC = ({ children }) => {
     setIsSideBarOpen(false);
   };
 
+  const sectionRef = useRef<HTMLElement[]>([]);
+  sectionRef.current = [];
+
+  const addToRef = (el: HTMLElement) => {
+    if (el && !sectionRef.current.includes(el)) {
+      sectionRef.current.push(el);
+    }
+  };
+
+  const showSection = (e: any) => {
+    sectionRef.current.forEach((section, idx) => {
+      if ((section as HTMLElement).dataset.id === e.target.dataset.id) {
+        (section as HTMLElement).style.display = 'flex';
+      } else {
+        (section as HTMLElement).style.display = 'none';
+      }
+    });
+  };
+
   useEffect(() => {
     getData();
   }, []);
@@ -96,6 +120,11 @@ const AppProvider: React.FC = ({ children }) => {
         controlSize,
         openSidebar,
         closeSidebar,
+        addToRef,
+        showSection,
+        ID1,
+        ID2,
+        ID3,
       }}
     >
       {children}

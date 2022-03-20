@@ -25,8 +25,8 @@ const Home: React.FC = () => {
   const singleBody = useRef<HTMLAnchorElement>(null!);
 
   const messege = useRef<HTMLParagraphElement>(null!);
-  const planetName = useRef<HTMLParagraphElement>(null!);
-  const innerBall = useRef<HTMLDivElement>(null!);
+  // const planetName = useRef<HTMLParagraphElement>(null!);
+  // const innerBall = useRef<HTMLDivElement>(null!);
 
   const messegeFunction = () => {
     setSize(window.innerWidth);
@@ -44,25 +44,29 @@ const Home: React.FC = () => {
     x: number;
     y: number;
   }
+
   // GSAP ANIMATION NO WORKING (ball div commented)
-  // const moveCoursorFunc = (e: MouseEvent, mouse: Mouse): void => {
+  // const moveCoursorFunc = (
+  //   e: MouseEvent | undefined,
+  //   mouse: Mouse | undefined
+  // ): void => {
   //   const allStars = document.querySelectorAll<HTMLElement>('.single-body');
   //   const ball = document.querySelector('.ball')! as HTMLDivElement;
-  //   if (ball) {
+  //   if (ball && innerBall.current !== null) {
   //     if (ball.classList.contains('ball-zoom')) {
   //       ball.classList.remove('ball-zoom');
   //     } else {
   //       innerBall.current.style.display = 'none';
   //     }
-  //   }
-  //   if ((e.target as HTMLElement).classList.contains('single-body')) {
-  //     let innerBallColor = (e.target as HTMLElement).id;
+  //     if ((e!.target as HTMLElement).classList.contains('single-body')) {
+  //       let innerBallColor = (e!.target as HTMLElement).id;
 
-  //     ball.classList.add('ball-zoom');
-  //     if (innerBallColor !== 'sun') {
-  //       innerBall.current.style.display = 'block';
-  //       innerBall.current.style.backgroundColor = `var(--${innerBallColor})`;
-  //       planetName.current.textContent = innerBallColor;
+  //       ball.classList.add('ball-zoom');
+  //       if (innerBallColor !== 'sun') {
+  //         innerBall.current.style.display = 'block';
+  //         innerBall.current.style.backgroundColor = `var(--${innerBallColor})`;
+  //         planetName.current.textContent = innerBallColor;
+  //       }
   //     }
   //     allStars.forEach((star: HTMLElement) => {
   //       star.addEventListener('mouseover', () => {
@@ -80,12 +84,12 @@ const Home: React.FC = () => {
   //       });
   //     });
   //   }
-  //   mouse.x = e.x;
-  //   mouse.y = e.y;
+  //   console.log('moving');
+  //   mouse!.x = e!.x;
+  //   mouse!.y = e!.y;
   // };
 
   // useEffect(() => {
-  //   window.addEventListener('mousemove', (e) => moveCoursorFunc(e, mouse));
   //   // test gsap
   //   gsap.set('.ball', { xPercent: -50, yPercent: -50 });
   //   const ball = document.querySelector('.ball')! as HTMLElement;
@@ -108,10 +112,12 @@ const Home: React.FC = () => {
   //   // fix mouse event
   //   return () => {
   //     console.log('by');
-  //     window.removeEventListener('mousemove', (e) => moveCoursorFunc(e, mouse));
+  //     window.removeEventListener('mousemove', (e) =>
+  //       moveCoursorFunc(undefined, undefined)
+  //     );
   //     console.log('killed');
   //   };
-  // });
+  // }, []);
 
   // messege TODO (gsap cursor not working)
   useEffect(() => {
@@ -205,8 +211,6 @@ const Wrapper = styled.section`
     width: 100%;
     height: 50em;
     position: relative;
-    border: 1px solid var(--color-white);
-    /* overflow: hidden; */
   }
   .messege {
     text-align: center;

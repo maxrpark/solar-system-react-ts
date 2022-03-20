@@ -23,3 +23,40 @@
   --uranus: blue;
   --neptune: green;
 }
+body {
+  background-color: var(--color-black);
+  color: white;
+}
+a {
+  color: white;
+  text-decoration: none;
+}
+
+.section-wrapper {
+  position: relative;
+  min-height: 300px;
+}
+.section-container {
+  position: absolute;
+  width: 100%;
+  padding: 1rem;
+  min-height: 100%;
+  top: 0;
+  left: 0;
+  color: var(--color-white);
+  display: none;
+  flex-direction: column;
+  gap: 1rem;
+}
+.section-options {
+  display: flex;
+}
+.moons-container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+}
+.moons-container a {
+  text-decoration: none;
+  color: var(--color-white);
+}
