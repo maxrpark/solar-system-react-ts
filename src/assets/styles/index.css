@@ -47,10 +47,34 @@ a {
   display: none;
   flex-direction: column;
   gap: 1rem;
+  background: white;
+}
+.section-container p,
+.section-container span,
+.section-container a {
+  color: var(--color-black);
 }
 .section-options {
   display: flex;
+  gap: 1rem;
 }
+
+.option-btn {
+  min-width: 100px;
+  background-color: var(--color-black);
+  padding: 0.4rem 0.7rem;
+  border: 2px solid var(--color-white);
+  border-top-left-radius: var(--border-radius-1);
+  border-top-right-radius: var(--border-radius-1);
+  border-bottom: none;
+  transition: var(--transition-1);
+  color: var(--color-white);
+}
+.active {
+  background-color: var(--color-white);
+  color: var(--color-black);
+}
+
 .moons-container {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -58,5 +82,18 @@ a {
 }
 .moons-container a {
   text-decoration: none;
-  color: var(--color-white);
+  /* color: var(--color-white); */
+}
+
+.simple-body-container {
+  max-width: 690px;
+  margin: 1rem auto;
+}
+.simple-body-title {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+.simple-body-info {
+  margin-top: 0.5rem;
 }

@@ -3,14 +3,58 @@ import { useState, useEffect, useContext, useRef } from 'react';
 
 import axios from 'axios';
 
-interface singleBody {
+interface aroundPlanet {
+  rel: string;
+  planet: string;
+}
+interface Moons {
+  moon: string;
+  rel: string;
+}
+
+interface Vol {
+  volValue: number;
+  volExponent: number;
+}
+
+interface Mass {
+  massValue: number;
+  massExponent: number;
+}
+export interface singleBody {
   id: string;
   name: string;
   meanRadius: number;
   isPlanet: boolean;
   englishName: string;
+  moons: Moons[];
+  eccentricity: number;
+  mass: Mass;
+  vol: Vol;
+  density: number;
+  gravity: number;
+  escape: number;
+  equaRadius: number;
+  polarRadius: number;
+  flattening: number;
+  dimension: number;
+  sideralOrbit: number;
+  sideralRotation: number;
+  aroundPlanet: aroundPlanet;
+  discoveredBy: string;
+  discoveryDate: string;
+  alternativeName: string;
+  axialTilt: number;
+  avgTemp: number;
+  mainAnomaly: number;
+  argPeriapsis: number;
+  longAscNode: number;
+  bodyType: string;
 }
 
+export interface Props {
+  singleBody: singleBody;
+}
 interface ContextState {
   solarSistem: Array<singleBody>;
   controlSpeed: () => void;
@@ -18,6 +62,7 @@ interface ContextState {
   openSidebar: () => void;
   closeSidebar: () => void;
   addToRef: (ref: HTMLElement) => void;
+  addBtnsToRef: (ref: HTMLButtonElement) => void;
   showSection: (e: any) => void;
   scale: boolean;
   speed: boolean;
@@ -35,10 +80,31 @@ const AppProvider: React.FC = ({ children }) => {
   const [scale, setScale] = useState(false);
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [speed, setSpeed] = useState(true);
-  const [BTNID, setBTNID] = useState(1);
-  const [ID1, setID1] = useState(1);
-  const [ID2, setID2] = useState(2);
-  const [ID3, setID3] = useState(3);
+
+  const ID1 = 1;
+  const ID2 = 2;
+  const ID3 = 3;
+  // const [ID1, setID1] = useState(1);
+  // const [ID2, setID2] = useState(2);
+  // const [ID3, setID3] = useState(3);
+
+  const btnRef = useRef<HTMLElement[]>([]);
+  btnRef.current = [];
+
+  const sectionRef = useRef<HTMLElement[]>([]);
+  sectionRef.current = [];
+
+  const addToRef = (el: HTMLElement) => {
+    if (el && !sectionRef.current.includes(el)) {
+      sectionRef.current.push(el);
+    }
+  };
+
+  const addBtnsToRef = (el: HTMLButtonElement) => {
+    if (el && !btnRef.current.includes(el)) {
+      btnRef.current.push(el);
+    }
+  };
 
   // asyn axios  function
   const getData = async () => {
@@ -49,7 +115,7 @@ const AppProvider: React.FC = ({ children }) => {
       const data = response.data.bodies;
       const planetsListName: Array<string> = [];
       if (data.length) {
-        const allBodies = Array();
+        const allBodies = [];
         const isPlanet = data.filter(
           (item: singleBody) => item.isPlanet === true
         );
@@ -85,16 +151,16 @@ const AppProvider: React.FC = ({ children }) => {
     setIsSideBarOpen(false);
   };
 
-  const sectionRef = useRef<HTMLElement[]>([]);
-  sectionRef.current = [];
+  const showSection = (e: { target: HTMLElement }) => {
+    btnRef.current.forEach((btn) => {
+      if ((btn as HTMLElement).dataset.id === e.target.dataset.id) {
+        console.log(btn);
 
-  const addToRef = (el: HTMLElement) => {
-    if (el && !sectionRef.current.includes(el)) {
-      sectionRef.current.push(el);
-    }
-  };
-
-  const showSection = (e: any) => {
+        (btn as HTMLElement).classList.add('active');
+      } else {
+        (btn as HTMLElement).classList.remove('active');
+      }
+    });
     sectionRef.current.forEach((section, idx) => {
       if ((section as HTMLElement).dataset.id === e.target.dataset.id) {
         (section as HTMLElement).style.display = 'flex';
@@ -116,15 +182,16 @@ const AppProvider: React.FC = ({ children }) => {
         speed,
         isSideBarOpen,
         planetsNames,
+        ID1,
+        ID2,
+        ID3,
         controlSpeed,
         controlSize,
         openSidebar,
         closeSidebar,
         addToRef,
         showSection,
-        ID1,
-        ID2,
-        ID3,
+        addBtnsToRef,
       }}
     >
       {children}

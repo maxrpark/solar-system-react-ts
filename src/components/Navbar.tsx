@@ -23,7 +23,6 @@ export default Navbar;
 
 const Wrapper = styled.nav`
   background-color: black;
-  /* background-color: #75abbc; */
   .navbar {
     display: flex;
     align-items: center;
