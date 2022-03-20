@@ -35,131 +35,111 @@ const BodyInfo: React.FC<Props> = ({ singleBody }) => {
           ref={addToRef}
           data-id={ID1}
         >
-          <span>
-            <TypeWriterEffect
-              startDelay={100}
-              cursorColor='transparent'
-              text={`${singleBody.meanRadius.toString().slice(0, 2)}`}
-              typeSpeed={100}
-            />
-          </span>
-          <span>
-            <TypeWriterEffect
-              startDelay={100}
-              cursorColor='transparent'
-              text={`${singleBody.eccentricity}`}
-              typeSpeed={100}
-            />
-          </span>
+          <TypeWriterEffect
+            startDelay={100}
+            cursorColor='transparent'
+            text={`${singleBody.meanRadius.toString().slice(0, 2)}`}
+            typeSpeed={100}
+          />
+
+          <TypeWriterEffect
+            startDelay={100}
+            cursorColor='transparent'
+            text={`${singleBody.eccentricity}`}
+            typeSpeed={100}
+          />
+
           {singleBody.meanRadius && (
-            <span>
-              <TypeWriterEffect
-                startDelay={100}
-                cursorColor='transparent'
-                text={`Radius: ${singleBody.meanRadius}`}
-                typeSpeed={100}
-              />
-            </span>
+            <TypeWriterEffect
+              startDelay={100}
+              cursorColor='transparent'
+              text={`Radius: ${singleBody.meanRadius}`}
+              typeSpeed={100}
+            />
           )}
           {singleBody.mass && singleBody.mass.massValue > 0 && (
-            <span>
-              <TypeWriterEffect
-                startDelay={100}
-                cursorColor='transparent'
-                text={`Mass Value: ${singleBody.mass.massValue}`}
-                typeSpeed={100}
-              />
-            </span>
+            <TypeWriterEffect
+              startDelay={100}
+              cursorColor='transparent'
+              text={`Mass Value: ${singleBody.mass.massValue}`}
+              typeSpeed={100}
+            />
           )}
           {singleBody.vol && singleBody.vol.volValue > 0 && (
-            <span>
-              <TypeWriterEffect
-                startDelay={100}
-                cursorColor='transparent'
-                text={`Vol Value: ${singleBody.vol.volValue}`}
-                typeSpeed={100}
-              />
-            </span>
+            <TypeWriterEffect
+              startDelay={100}
+              cursorColor='transparent'
+              text={`Vol Value: ${singleBody.vol.volValue}`}
+              typeSpeed={100}
+            />
           )}
           {singleBody.density > 0 && (
-            <span>
-              <TypeWriterEffect
-                startDelay={100}
-                cursorColor='transparent'
-                text={`Density: ${singleBody.density}`}
-                typeSpeed={100}
-              />
-            </span>
+            <TypeWriterEffect
+              startDelay={100}
+              cursorColor='transparent'
+              text={`Density: ${singleBody.density}`}
+              typeSpeed={100}
+            />
           )}
           {singleBody.gravity > 0 && (
-            <span>
-              <TypeWriterEffect
-                startDelay={100}
-                cursorColor='transparent'
-                text={`Gravity: ${singleBody.gravity}`}
-                typeSpeed={100}
-              />
-            </span>
+            <TypeWriterEffect
+              startDelay={100}
+              cursorColor='transparent'
+              text={`Gravity: ${singleBody.gravity}`}
+              typeSpeed={100}
+            />
           )}
           {singleBody.escape > 0 && (
-            <span>
-              <TypeWriterEffect
-                startDelay={100}
-                cursorColor='transparent'
-                text={`Escape: ${singleBody.escape}`}
-                typeSpeed={100}
-              />
-            </span>
+            <TypeWriterEffect
+              startDelay={100}
+              cursorColor='transparent'
+              text={`Escape: ${singleBody.escape}`}
+              typeSpeed={100}
+            />
           )}
 
           {singleBody.equaRadius > 0 && (
-            <span>
-              <TypeWriterEffect
-                startDelay={100}
-                cursorColor='transparent'
-                text={`EquaRadius: ${singleBody.equaRadius}`}
-                typeSpeed={100}
-              />
-            </span>
+            <TypeWriterEffect
+              startDelay={100}
+              cursorColor='transparent'
+              text={`EquaRadius: ${singleBody.equaRadius}`}
+              typeSpeed={100}
+            />
           )}
         </section>
         <section className='section-container' ref={addToRef} data-id={ID2}>
           {singleBody.polarRadius > 0 && (
-            <span>polarRadius: {singleBody.polarRadius}</span>
+            <p>polarRadius: {singleBody.polarRadius}</p>
           )}
           {singleBody.flattening > 0 && (
-            <span>flattening: {singleBody.flattening}</span>
+            <p>flattening: {singleBody.flattening}</p>
           )}
-          {singleBody.dimension > 0 && (
-            <span>dimension: {singleBody.dimension}</span>
-          )}
+          {singleBody.dimension > 0 && <p>dimension: {singleBody.dimension}</p>}
           {singleBody.sideralOrbit > 0 && (
-            <span>sideralOrbit: {singleBody.sideralOrbit}</span>
+            <p>sideralOrbit: {singleBody.sideralOrbit}</p>
           )}
           {singleBody.sideralRotation > 0 && (
-            <span>sideralRotation: {singleBody.sideralRotation}</span>
+            <p>sideralRotation: {singleBody.sideralRotation}</p>
           )}
           {singleBody.discoveryDate && (
-            <span>discoveryDate: {singleBody.discoveryDate}</span>
+            <p>discoveryDate: {singleBody.discoveryDate}</p>
           )}
           {singleBody.discoveredBy && (
-            <span>discoveredBy: {singleBody.discoveredBy}</span>
+            <p>discoveredBy: {singleBody.discoveredBy}</p>
           )}
           {singleBody.alternativeName && (
-            <span>alternativeName: {singleBody.alternativeName}</span>
+            <p>alternativeName: {singleBody.alternativeName}</p>
           )}
-          {singleBody.axialTilt > 0 && (
-            <span>axialTilt: {singleBody.axialTilt}</span>
-          )}
-          {singleBody.avgTemp > 0 && <span>avgTemp: {singleBody.avgTemp}</span>}
+          {singleBody.axialTilt > 0 && <p>axialTilt: {singleBody.axialTilt}</p>}
+          {singleBody.avgTemp > 0 && <p>avgTemp: {singleBody.avgTemp}</p>}
           {singleBody.mainAnomaly > 0 && (
-            <span>mainAnomaly: {singleBody.mainAnomaly}</span>
+            <p>mainAnomaly: {singleBody.mainAnomaly}</p>
           )}
           {singleBody.argPeriapsis > 0 && (
-            <span>argPeriapsis: {singleBody.argPeriapsis}</span>
+            <p>argPeriapsis: {singleBody.argPeriapsis}</p>
           )}
           {singleBody.longAscNode > 0 && (
-            <span>longAscNode: {singleBody.longAscNode}</span>
+            <p>longAscNode: {singleBody.longAscNode}</p>
           )}
         </section>
         <section
