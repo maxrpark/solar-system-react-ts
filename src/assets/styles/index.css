@@ -97,3 +97,7 @@ a {
 .simple-body-info {
   margin-top: 0.5rem;
 }
+.react-typewriter-text {
+  font-size: 1rem;
+  color: var(--color-black);
+}
