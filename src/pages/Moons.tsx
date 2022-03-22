@@ -29,7 +29,6 @@ const Moons: React.FC = () => {
         const data = response.data;
         setSingleMoon(data);
         setLoading(false);
-        console.log(data);
       }
 
       // }

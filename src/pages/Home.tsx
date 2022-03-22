@@ -14,19 +14,28 @@ interface singleBody {
   englishName: string;
 }
 
+interface Mouse {
+  x: number;
+  y: number;
+}
+
 const Home: React.FC = () => {
   const { solarSistem, scale, speed, controlSpeed, controlSize } =
     UseGlobalContext();
   const [size, setSize] = useState(window.innerWidth) as any;
 
-  const speedBtn = useRef<HTMLButtonElement>(null!);
-  const scaleBtn = useRef<HTMLButtonElement>(null!);
+  const speedBtn = useRef<HTMLButtonElement>(null!); // btn speed
+  const scaleBtn = useRef<HTMLButtonElement>(null!); // btn scale
   const container = useRef<HTMLDivElement>(null!);
-  const singleBody = useRef<HTMLAnchorElement>(null!);
+  const singleBody = useRef<HTMLAnchorElement>(null!); // no using
 
   const messege = useRef<HTMLParagraphElement>(null!);
-  // const planetName = useRef<HTMLParagraphElement>(null!);
-  // const innerBall = useRef<HTMLDivElement>(null!);
+  const planetName = useRef<HTMLParagraphElement>(null!);
+
+  const ball = useRef<HTMLDivElement>(null!);
+  const innerBall = useRef<HTMLDivElement>(null!);
+  const pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+  const mouse: Mouse = { x: pos.x, y: pos.y };
 
   const messegeFunction = () => {
     setSize(window.innerWidth);
@@ -35,95 +44,76 @@ const Home: React.FC = () => {
         'Click to pause or click on a planet to see more info';
     } else {
       messege.current.textContent =
-        // 'Click to pause, hover over a planet to pause and click to see more info';
-        'Click to pause or click on a planet to see more info';
+        'Click to pause, hover over a planet to pause and click to see more info';
     }
   };
 
-  interface Mouse {
-    x: number;
-    y: number;
-  }
+  const moveCoursorFunc = (e: MouseEvent): void => {
+    const allStars = document.querySelectorAll<HTMLElement>('.single-body'); // useRef
+    gsap.set(ball.current, { xPercent: -50, yPercent: -50 });
+    const speed = 0.35;
+    const xSet = gsap.quickSetter(ball.current, 'x', 'px');
+    const ySet = gsap.quickSetter(ball.current, 'y', 'px');
 
-  // GSAP ANIMATION NO WORKING (ball div commented)
-  // const moveCoursorFunc = (
-  //   e: MouseEvent | undefined,
-  //   mouse: Mouse | undefined
-  // ): void => {
-  //   const allStars = document.querySelectorAll<HTMLElement>('.single-body');
-  //   const ball = document.querySelector('.ball')! as HTMLDivElement;
-  //   if (ball && innerBall.current !== null) {
-  //     if (ball.classList.contains('ball-zoom')) {
-  //       ball.classList.remove('ball-zoom');
-  //     } else {
-  //       innerBall.current.style.display = 'none';
-  //     }
-  //     if ((e!.target as HTMLElement).classList.contains('single-body')) {
-  //       let innerBallColor = (e!.target as HTMLElement).id;
+    if (ball.current && innerBall.current !== null) {
+      if (ball.current.classList.contains('ball-zoom')) {
+        ball.current.classList.remove('ball-zoom');
+      } else {
+        innerBall.current.style.display = 'none';
+      }
+      if ((e!.target as HTMLElement).classList.contains('single-body')) {
+        let innerBallColor = (e!.target as HTMLElement).id;
 
-  //       ball.classList.add('ball-zoom');
-  //       if (innerBallColor !== 'sun') {
-  //         innerBall.current.style.display = 'block';
-  //         innerBall.current.style.backgroundColor = `var(--${innerBallColor})`;
-  //         planetName.current.textContent = innerBallColor;
-  //       }
-  //     }
-  //     allStars.forEach((star: HTMLElement) => {
-  //       star.addEventListener('mouseover', () => {
-  //         allStars.forEach((star: HTMLElement) => {
-  //           star.style.animationPlayState = 'paused';
-  //         });
-  //       });
-  //     });
+        ball.current.classList.add('ball-zoom');
+        if (innerBallColor !== 'sun') {
+          innerBall.current.style.display = 'block';
+          innerBall.current.style.backgroundColor = `var(--${innerBallColor})`;
+          planetName.current.textContent = innerBallColor;
+        }
+      }
+      allStars.forEach((star: HTMLElement) => {
+        star.addEventListener('mouseover', () => {
+          allStars.forEach((star: HTMLElement) => {
+            star.style.animationPlayState = 'paused';
+          });
+        });
+      });
 
-  //     allStars.forEach((star: HTMLElement) => {
-  //       star.addEventListener('mouseleave', () => {
-  //         allStars.forEach((star: HTMLElement) => {
-  //           star.style.animationPlayState = 'running';
-  //         });
-  //       });
-  //     });
-  //   }
-  //   console.log('moving');
-  //   mouse!.x = e!.x;
-  //   mouse!.y = e!.y;
-  // };
+      allStars.forEach((star: HTMLElement) => {
+        star.addEventListener('mouseleave', () => {
+          allStars.forEach((star: HTMLElement) => {
+            star.style.animationPlayState = 'running';
+          });
+        });
+      });
+    }
+    mouse!.x = e!.x;
+    mouse!.y = e!.y;
+
+    gsap.ticker.add(() => {
+      const dt = 1.0 - Math.pow(1.0 - speed, gsap.ticker.deltaRatio());
+      pos.x += (mouse.x - pos.x) * dt;
+      pos.y += (mouse.y - pos.y) * dt;
+      xSet(pos.x);
+      ySet(pos.y);
+    });
+  };
 
   // useEffect(() => {
-  //   // test gsap
-  //   gsap.set('.ball', { xPercent: -50, yPercent: -50 });
-  //   const ball = document.querySelector('.ball')! as HTMLElement;
-  //   const pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-  //   const mouse: Mouse = { x: pos.x, y: pos.y };
-  //   const speed = 0.35;
-  //   const xSet = gsap.quickSetter(ball, 'x', 'px');
-  //   const ySet = gsap.quickSetter(ball, 'y', 'px');
-  //   window.addEventListener('mousemove', (e) => moveCoursorFunc(e, mouse));
-  //   gsap.ticker.add(() => {
-  //     // adjust speed for higher refresh monitors
-  //     const dt = 1.0 - Math.pow(1.0 - speed, gsap.ticker.deltaRatio());
-  //     pos.x += (mouse.x - pos.x) * dt;
-  //     pos.y += (mouse.y - pos.y) * dt;
-  //     // if (!this.moveCursor) {
-  //     xSet(pos.x);
-  //     ySet(pos.y);
-  //     // }
-  //   });
-  //   // fix mouse event
+  //   window.addEventListener('mousemove', moveCoursorFunc);
   //   return () => {
-  //     console.log('by');
-  //     window.removeEventListener('mousemove', (e) =>
-  //       moveCoursorFunc(undefined, undefined)
-  //     );
-  //     console.log('killed');
+  //     window.removeEventListener('mousemove', moveCoursorFunc);
   //   };
   // }, []);
 
-  // messege TODO (gsap cursor not working)
   useEffect(() => {
     messegeFunction();
     window.addEventListener('resize', messegeFunction);
-    return () => window.removeEventListener('resize', messegeFunction);
+    window.addEventListener('mousemove', moveCoursorFunc);
+    return () => {
+      window.removeEventListener('resize', messegeFunction);
+      window.removeEventListener('mousemove', moveCoursorFunc);
+    };
   });
 
   // control speed and size
@@ -152,11 +142,11 @@ const Home: React.FC = () => {
 
   return (
     <Wrapper>
-      {/* <div className='ball'>
+      <div className='ball' ref={ball}>
         <div className='ball-inner' ref={innerBall}>
           <p ref={planetName}></p>
         </div>
-      </div> */}
+      </div>
       <div className='options'>
         <button ref={speedBtn} className='btn'>
           Speed

@@ -154,8 +154,6 @@ const AppProvider: React.FC = ({ children }) => {
   const showSection = (e: { target: HTMLElement }) => {
     btnRef.current.forEach((btn) => {
       if ((btn as HTMLElement).dataset.id === e.target.dataset.id) {
-        console.log(btn);
-
         (btn as HTMLElement).classList.add('active');
       } else {
         (btn as HTMLElement).classList.remove('active');
