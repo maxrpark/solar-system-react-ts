@@ -1,7 +1,7 @@
 <div align="center">
 <h2>Solar System Ts </h1>
   
-![alt text](https://img.shields.io/badge/My%20first%20website-3.0.0-blue)  ![alt text](https://img.shields.io/badge/Made%20by-Max-brightgreen) ![alt text](https://img.shields.io/badge/Made%20With-React.js-blue)
+![alt text](https://img.shields.io/badge/My%20first%20website-3.0.1-blue)  ![alt text](https://img.shields.io/badge/Made%20by-Max-brightgreen) ![alt text](https://img.shields.io/badge/Made%20With-React.js-blue)
 </div>
 
 # Solar System Ts
