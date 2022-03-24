@@ -2,21 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import TypeWriterEffect from 'react-typewriter-effect';
 import { Props } from '../context';
+import styled from 'styled-components';
+import { UseGlobalContext } from '../context';
 
 const BodyTitle: React.FC<Props> = ({ singleBody }) => {
-  const setName = (name: string) => {
-    if (name === 'La Lune') {
-      return (name = 'Moon');
-    } else if (name === 'Le Soleil') {
-      return (name = 'Sun');
-    } else if (name === 'La Terre') {
-      return (name = 'Earth');
-    } else {
-      return (name = singleBody.name);
-    }
-  };
+  const { setName } = UseGlobalContext();
   return (
-    <>
+    <Wrapper>
       <TypeWriterEffect
         startDelay={100}
         cursorColor='transparent'
@@ -26,21 +18,13 @@ const BodyTitle: React.FC<Props> = ({ singleBody }) => {
 
       {singleBody.aroundPlanet && singleBody.aroundPlanet.planet && (
         <Link to={`/planet/${singleBody.aroundPlanet.planet}`}>
-          {singleBody.aroundPlanet.planet === 'terre' ? (
-            <TypeWriterEffect
-              startDelay={100}
-              cursorColor='transparent'
-              text={`Orbit: Earth`}
-              typeSpeed={100}
-            />
-          ) : (
-            <TypeWriterEffect
-              startDelay={100}
-              cursorColor='transparent'
-              text={`Orbit: ${singleBody.aroundPlanet.planet}`}
-              typeSpeed={100}
-            />
-          )}
+          <TypeWriterEffect
+            startDelay={100}
+            cursorColor='transparent'
+            text={`Orbit: ${setName(singleBody.aroundPlanet.planet)}`}
+            typeSpeed={100}
+          />
+          {/* )} */}
         </Link>
       )}
 
@@ -48,12 +32,21 @@ const BodyTitle: React.FC<Props> = ({ singleBody }) => {
         <TypeWriterEffect
           startDelay={100}
           cursorColor='transparent'
-          text={`bodyType: ${singleBody.bodyType}`}
+          text={`Type: ${singleBody.bodyType}`}
           typeSpeed={100}
         />
       )}
-    </>
+    </Wrapper>
   );
 };
 
 export default BodyTitle;
+
+const Wrapper = styled.section`
+  p {
+    color: white;
+    font-size: 1.25rem;
+    text-transform: capitalize;
+    margin-top: 0.5rem;
+  }
+`;

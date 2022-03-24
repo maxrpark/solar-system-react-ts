@@ -7,6 +7,7 @@ import styled from 'styled-components';
 // Component
 import BodyInfo from '../components/BodyInfo';
 import BodyTitle from '../components/BodyTitle';
+import Loader from '../components/Loader';
 
 // image
 import moon from '../assets/images/moon_map.jpeg';
@@ -41,7 +42,7 @@ const Moons: React.FC = () => {
     getSingleMoon(); // eslint-disable-next-line
   }, [moonRel]);
   if (loading) {
-    return <h1>Loading...</h1>;
+    return <Loader />;
   }
   return (
     <Wrapper>
@@ -50,8 +51,8 @@ const Moons: React.FC = () => {
           className={singleMoon.name === 'La Lune' ? 'moon' : 'not-moon'}
         ></div>
       </div>
-      <div className='simple-body-container'>
-        <div className='simple-body-title'>
+      <div className='single-body-container'>
+        <div className='single-body-title'>
           <BodyTitle singleBody={singleMoon} />
         </div>
         <BodyInfo singleBody={singleMoon} />

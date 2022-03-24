@@ -48,6 +48,10 @@ a {
   flex-direction: column;
   gap: 1rem;
   background: white;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px,
+    rgba(255, 255, 255, 0.3) 0px 30px 60px -30px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 .section-container p,
 .section-container span,
@@ -56,11 +60,13 @@ a {
 }
 .section-options {
   display: flex;
-  gap: 1rem;
+  gap: 0.5rem;
+  /* justify-content: space-around; */
 }
 
 .option-btn {
   min-width: 100px;
+  width: 100%;
   background-color: var(--color-black);
   padding: 0.4rem 0.7rem;
   border: 2px solid var(--color-white);
@@ -69,6 +75,8 @@ a {
   border-bottom: none;
   transition: var(--transition-1);
   color: var(--color-white);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 }
 .active {
   background-color: var(--color-white);
@@ -77,24 +85,29 @@ a {
 
 .moons-container {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 1rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  /* text-align: center; */
 }
 .moons-container a {
-  text-decoration: none;
-  /* color: var(--color-white); */
+  text-decoration: underline;
+  transition: var(--transition-1);
+}
+.moons-container a:hover {
+  color: crimson;
 }
 
-.simple-body-container {
+.single-body-container {
   max-width: 690px;
   margin: 1rem auto;
 }
-.simple-body-title {
+.single-body-title {
   text-align: center;
   font-size: 1.5rem;
   margin-bottom: 1rem;
+  padding: 0 1rem;
 }
-.simple-body-info {
+.single-body-info {
   margin-top: 0.5rem;
 }
 .react-typewriter-text {

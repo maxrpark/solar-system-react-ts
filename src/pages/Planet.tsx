@@ -7,6 +7,7 @@ import styled from 'styled-components';
 // Component
 import BodyInfo from '../components/BodyInfo';
 import BodyTitle from '../components/BodyTitle';
+import Loader from '../components/Loader';
 
 // images
 import sun from '../assets/images/sun.jpeg';
@@ -48,15 +49,15 @@ const Planet: React.FC = () => {
     getSinglePlanet(); // eslint-disable-next-line
   }, [id]);
   if (loading) {
-    return <h1>Loading...</h1>;
+    return <Loader />;
   }
   return (
     <Wrapper key={singlePlanet.name}>
       <div className='single-body'>
         <div className={`${singlePlanet.englishName.toLowerCase()}`}></div>
       </div>
-      <div className='simple-body-container'>
-        <div className='simple-body-title'>
+      <div className='single-body-container'>
+        <div className='single-body-title'>
           <BodyTitle singleBody={singlePlanet} />
         </div>
         <BodyInfo singleBody={singlePlanet} />

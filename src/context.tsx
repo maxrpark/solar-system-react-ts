@@ -64,6 +64,7 @@ interface ContextState {
   addToRef: (ref: HTMLElement) => void;
   addBtnsToRef: (ref: HTMLButtonElement) => void;
   showSection: (e: any) => void;
+  setName: (name: string) => void;
   scale: boolean;
   speed: boolean;
   isSideBarOpen: boolean;
@@ -71,12 +72,14 @@ interface ContextState {
   ID1: number;
   ID2: number;
   ID3: number;
+  isLoading: boolean;
 }
 const AppContext = React.createContext({} as ContextState);
 
 const AppProvider: React.FC = ({ children }) => {
   const [solarSistem, setSolarSistem] = useState<singleBody[]>([]);
   const [planetsNames, setPlanetsNames] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [scale, setScale] = useState(false);
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [speed, setSpeed] = useState(true);
@@ -84,9 +87,18 @@ const AppProvider: React.FC = ({ children }) => {
   const ID1 = 1;
   const ID2 = 2;
   const ID3 = 3;
-  // const [ID1, setID1] = useState(1);
-  // const [ID2, setID2] = useState(2);
-  // const [ID3, setID3] = useState(3);
+
+  const setName = (name: string) => {
+    if (name === 'La Lune') {
+      return (name = 'Moon');
+    } else if (name === 'Le Soleil') {
+      return (name = 'Sun');
+    } else if (name === 'La Terre' || name === 'terre') {
+      return (name = 'Earth');
+    } else {
+      return name;
+    }
+  };
 
   const btnRef = useRef<HTMLElement[]>([]);
   btnRef.current = [];
@@ -129,6 +141,7 @@ const AppProvider: React.FC = ({ children }) => {
           planetsListName.push(item.id);
         });
         setPlanetsNames(planetsListName);
+        setIsLoading(false);
       }
     } catch (error) {
       console.log(error);
@@ -153,6 +166,7 @@ const AppProvider: React.FC = ({ children }) => {
 
   const showSection = (e: { target: HTMLElement }) => {
     btnRef.current.forEach((btn) => {
+      console.log(btn);
       if ((btn as HTMLElement).dataset.id === e.target.dataset.id) {
         (btn as HTMLElement).classList.add('active');
       } else {
@@ -183,6 +197,7 @@ const AppProvider: React.FC = ({ children }) => {
         ID1,
         ID2,
         ID3,
+        isLoading,
         controlSpeed,
         controlSize,
         openSidebar,
@@ -190,6 +205,7 @@ const AppProvider: React.FC = ({ children }) => {
         addToRef,
         showSection,
         addBtnsToRef,
+        setName,
       }}
     >
       {children}
