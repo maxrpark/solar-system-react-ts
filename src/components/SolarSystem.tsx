@@ -116,6 +116,7 @@ const Wrapper = styled.div`
     border: 2px solid var(--color-white);
     border-radius: var(--border-radius-1);
     transition: var(--transition-1);
+    font-family: 'Space Mono', monospace;
   }
   .btn:hover {
     background-color: var(--color-black);
