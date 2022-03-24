@@ -10,6 +10,7 @@ const BodyTitle: React.FC<Props> = ({ singleBody }) => {
   return (
     <Wrapper>
       <TypeWriterEffect
+        clasName='title'
         startDelay={100}
         cursorColor='transparent'
         text={`Name: ${setName(singleBody.name)}`}
@@ -19,6 +20,7 @@ const BodyTitle: React.FC<Props> = ({ singleBody }) => {
       {singleBody.aroundPlanet && singleBody.aroundPlanet.planet && (
         <Link to={`/planet/${singleBody.aroundPlanet.planet}`}>
           <TypeWriterEffect
+            clasName='title'
             startDelay={100}
             cursorColor='transparent'
             text={`Orbit: ${setName(singleBody.aroundPlanet.planet)}`}
@@ -30,6 +32,7 @@ const BodyTitle: React.FC<Props> = ({ singleBody }) => {
 
       {singleBody.bodyType && (
         <TypeWriterEffect
+          clasName='title'
           startDelay={100}
           cursorColor='transparent'
           text={`Type: ${singleBody.bodyType}`}
@@ -43,6 +46,12 @@ const BodyTitle: React.FC<Props> = ({ singleBody }) => {
 export default BodyTitle;
 
 const Wrapper = styled.section`
+  .react-typewriter-text {
+    color: white;
+    font-size: 1.25rem;
+    text-transform: capitalize;
+    margin-top: 0.5rem;
+  }
   p {
     color: white;
     font-size: 1.25rem;
