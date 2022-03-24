@@ -46,6 +46,7 @@ const Planet: React.FC = () => {
     }
   };
   useEffect(() => {
+    window.scrollTo(0, 0);
     getSinglePlanet(); // eslint-disable-next-line
   }, [id]);
   if (loading) {

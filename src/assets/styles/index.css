@@ -25,6 +25,7 @@
   --uranus: blue;
   --neptune: green;
 }
+
 body {
   background-color: var(--color-black);
   color: white;
@@ -40,12 +41,10 @@ a {
   min-height: 300px;
 }
 .section-container {
-  position: absolute;
+  /* position: absolute; */
   width: 100%;
   padding: 1rem;
-  min-height: 100%;
-  top: 0;
-  left: 0;
+  min-height: 300px;
   color: var(--color-white);
   display: none;
   flex-direction: column;
@@ -111,9 +110,29 @@ a {
   padding: 0 1rem;
 }
 .single-body-info {
-  margin-top: 0.5rem 0 2rem 0;
+  margin: 0.5rem 0 2rem 0;
 }
 .react-typewriter-text {
   font-size: 1rem;
   color: var(--color-black);
+}
+
+/* Footer */
+footer {
+  height: 100px;
+  color: var(--color-white);
+  background-color: var(--color-black);
+  display: grid;
+  place-content: center;
+  margin-top: 2rem;
+  gap: 0.5rem;
+  text-align: center;
+}
+footer a {
+  color: var(--color-white);
+  text-decoration: underline;
+}
+footer a:hover {
+  color: var(--sun);
+  letter-spacing: normal;
 }

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // nav
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
+import Footer from './components/Footer';
 // pages
 import Home from './pages/Home';
 import Planet from './pages/Planet';
@@ -18,10 +19,8 @@ function App() {
         {/* <Route exact path='/' element={<Home />} /> */}
         <Route path='/planet/:id' element={<Planet />} />
         <Route path='/moons/' element={<Moons />} />
-        {/* <Route path='*' >
-        <Error />
-      </Route> */}
       </Routes>
+      <Footer />
     </Router>
   );
 }

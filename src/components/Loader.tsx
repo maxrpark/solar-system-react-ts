@@ -14,10 +14,14 @@ const Loader = () => {
 export default Loader;
 
 const Wrapper = styled.section`
-  position: absolute;
-  top: 50%;
+  /* position: absolute; */
+  /* top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%); */
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   .lds-ripple {
     display: inline-block;

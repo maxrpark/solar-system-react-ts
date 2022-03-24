@@ -39,6 +39,7 @@ const Moons: React.FC = () => {
     }
   };
   useEffect(() => {
+    window.scrollTo(0, 0);
     getSingleMoon(); // eslint-disable-next-line
   }, [moonRel]);
   if (loading) {
