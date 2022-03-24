@@ -24,8 +24,8 @@ const Home: React.FC = () => {
 export default Home;
 
 const Wrapper = styled.section`
-  margin: 0;
-  height: 100vh;
+  margin: 1rem 0;
+  /* height: 100vh; */
   display: flex;
   align-items: center;
   flex-direction: column;

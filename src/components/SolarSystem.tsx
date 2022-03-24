@@ -62,14 +62,6 @@ const SolarSystem: React.FC<Props> = ({ solarSistem }) => {
 
   return (
     <Wrapper>
-      <div className='options'>
-        <button ref={speedBtn} className='btn'>
-          Speed
-        </button>
-        <button ref={scaleBtn} className='btn'>
-          Scale
-        </button>
-      </div>
       <div ref={container} className='container'>
         <p className='messege' ref={messege}></p>
         {solarSistem.map((planet: singleBody) => {
@@ -94,6 +86,14 @@ const SolarSystem: React.FC<Props> = ({ solarSistem }) => {
             ></Link>
           );
         })}
+      </div>
+      <div className='options'>
+        <button ref={speedBtn} className='btn'>
+          Speed
+        </button>
+        <button ref={scaleBtn} className='btn'>
+          Scale
+        </button>
       </div>
     </Wrapper>
   );
