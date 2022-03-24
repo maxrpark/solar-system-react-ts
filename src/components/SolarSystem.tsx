@@ -30,7 +30,7 @@ const SolarSystem: React.FC<Props> = ({ solarSistem }) => {
   const messegeFunction = () => {
     setSize(window.innerWidth);
 
-    if (size < 1000) {
+    if (size < 1300) {
       messege.current.textContent =
         'Click to pause or click on a planet to see more info';
     } else {

@@ -66,7 +66,7 @@ const MouseFollow = () => {
   };
 
   useEffect(() => {
-    const media_query = 'screen and (min-width:1000px)';
+    const media_query = 'screen and (min-width:1300px)';
     const matched = window.matchMedia(media_query).matches;
     if (matched) {
       window.addEventListener('mousemove', moveCoursorFunc);
@@ -122,7 +122,7 @@ const Wrapper = styled.section`
     color: var(--color-white);
     text-transform: capitalize;
   }
-  @media screen and (max-width: 1000px) {
+  @media screen and (max-width: 1300px) {
     .ball {
       display: none;
     }
