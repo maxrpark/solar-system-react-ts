@@ -25,4 +25,4 @@ You can learn about the planets and moons in our solar system.
 ## Visit the website
 
 You can take a look at the website by clicking the next link
-[Solar System Ts](https://solar-system-ts.netlify.app/.
+[Solar System Ts](https://solar-system-ts.netlify.app/).
